@@ -34,7 +34,7 @@ extern "C" {
 #include "fonts.h"
 #include "m_displ_ST7735.h"
 #include "m_displ_ST7735_test.h"
-#include "m_displ_ST7735_img_test.h"
+#include "m_displ_ST7735_background.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/

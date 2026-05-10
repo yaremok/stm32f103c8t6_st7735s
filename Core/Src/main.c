@@ -163,7 +163,7 @@ int main(void)
   /**/
   srand(time(NULL));
 
-  Displ_ImgTest();
+  Displ_DrawBackground();
 
   int w = 106;
   int h = 36;
@@ -219,7 +219,7 @@ int main(void)
 	  // Displ_PerfTest();
 
     // hide in old position
-    // Displ_ImgPartTest(o_x0, o_y0, w, h);
+    // Displ_DrawBackgroundPart(o_x0, o_y0, w, h);
 
     // define new position
     int ch_r = randInt(0, 100);
@@ -266,7 +266,7 @@ int main(void)
     Displ_Border(n_x0, n_y0, w, h, r, swingColor());
     
     // fill new-old difference
-    Displ_ImgDifftTest(
+    Displ_DrawBackgroundDifference(
         o_x0,
         o_y0,
         w,

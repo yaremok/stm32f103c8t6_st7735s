@@ -11,14 +11,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void Displ_ImgTest();
-void Displ_ImgPartTest(
+void Displ_DrawBackground();
+void Displ_DrawBackgroundPart(
     uint16_t x,
     uint16_t y,
     uint16_t w,
     uint16_t h
 );
-void Displ_ImgDifftTest(
+void Displ_DrawBackgroundDifference(
     uint16_t o_x,
     uint16_t o_y,
     uint16_t w,
