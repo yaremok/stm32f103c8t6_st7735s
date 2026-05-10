@@ -1,55 +1,42 @@
-# Prerequisites
-*.d
+# IDE-specific settings (not critical to share)
+.settings/
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# STM32CubeIDE specific files
+.vscode/*
+!.vscode/*.json
 
-# Linker output
-*.ilk
+# STM32CubeIDE project files
+!.cproject
+!.project
+!.mxproject
+!*.launch
+
+# Object and dependency files
+!*.mk
+!makefile
+!objects.mk
+!sources.mk
+!objects.list
+
+# Build artifacts
 *.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
+*.o
+*.d
 *.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
+*.dep
 *.su
-*.idb
-*.pdb
+*.log
+*.bak
+*.tmp
+*.cyclo
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# Cube-generated backups
+*~
+*.swp
 
-# debug information files
-*.dwo
+# System files
+.DS_Store
+Thumbs.db
+
+# Workspace-wide metadata (in parent folder)
+../.metadata/
