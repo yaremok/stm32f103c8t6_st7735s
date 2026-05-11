@@ -146,6 +146,8 @@
 // (if using TouchGFX, don't buffers from this library)
 #define SIZEBUF 1<<BUFLEVEL
 
+#define min(a, b) (((a) < (b)) ? (a) : (b))
+#define max(a, b) (((a) < (b)) ? (b) : (a))
 
 typedef enum {
 	Displ_Orientat_0,
