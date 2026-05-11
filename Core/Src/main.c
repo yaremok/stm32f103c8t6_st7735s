@@ -87,7 +87,36 @@ char* time_str()
              "%02lu:%02lu:%02lu",
              hours, minutes, seconds);
 
-    return str;
+  return str;
+}
+
+
+static uint32_t last_time_ms = 0;
+static char fps_str[10];
+
+void time_tick(void)
+{
+    uint32_t sys_ms = HAL_GetTick();
+
+    if (last_time_ms != 0)
+    {
+        uint32_t dt = sys_ms - last_time_ms;
+
+        if (dt > 0)
+        {
+            float fps = 1000.0f / dt;
+            int fps_int = (int) fps;
+
+            snprintf(
+                fps_str,
+                sizeof(fps_str),
+                "fps: %4d",
+				fps_int
+            );
+        }
+    }
+
+    last_time_ms = sys_ms;
 }
 
 
@@ -166,7 +195,7 @@ int main(void)
   Displ_DrawBackground();
 
   int w = 106;
-  int h = 36;
+  int h = 46;
   int cx = w/2;
   int cy = h/2;
   int r = 5;
@@ -235,10 +264,26 @@ int main(void)
     Displ_CString(
       n_x0 + r, 
       n_y0 + r, 
-      x1 + sx - 1 - r, 
-      y1 + sy - 1 - r, 
+      n_x0 + w - 1 - r,
+      n_y0 + 0.70 * h - 1 - r,
       time_str(), 
       Font16, 
+      1, 
+      BLACK, 
+      WHITE
+    );
+
+
+      // fps
+    time_tick();
+
+    Displ_CString(
+      n_x0 + r, 
+      n_y0 + r + 0.49 * h,
+      n_x0 + w - 1 - r,
+      n_y0 + h - 1 - r,
+      fps_str, 
+      Font12, 
       1, 
       BLACK, 
       WHITE
@@ -258,7 +303,7 @@ int main(void)
 
     /**/
 
-    HAL_Delay(1);
+    HAL_Delay(0);
 
     /* USER CODE END WHILE */
 
