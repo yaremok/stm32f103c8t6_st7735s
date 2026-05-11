@@ -64,8 +64,8 @@
  ** enable SPI mode wanted uncommenting ONE row ***
  ******* Same as configuration set on CubeMX ******/
 
-//#define DISPLAY_SPI_POLLING_MODE
-#define DISPLAY_SPI_INTERRUPT_MODE
+#define DISPLAY_SPI_POLLING_MODE
+//#define DISPLAY_SPI_INTERRUPT_MODE
 //#define DISPLAY_SPI_DMA_MODE
 
 
@@ -161,10 +161,10 @@ extern int16_t _height;      								///< (oriented) display height
 #define SPI_DATA GPIO_PIN_SET		//DISPL_DC_Pin level sending data
 
 typedef struct {
-  uint8_t x0; 
-  uint8_t y0; 
-  uint8_t x1; 
-  uint8_t y1;
+  uint16_t x0; 
+  uint16_t y0; 
+  uint16_t x1; 
+  uint16_t y1;
 } rect_t;
 
 typedef struct {

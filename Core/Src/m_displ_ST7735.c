@@ -257,53 +257,62 @@ void Displ_WriteData(uint8_t* buff, size_t buff_size, uint8_t isTouchGFXBuffer){
 		if (ib.buff != NULL)
 		{
 			// intersection - part of the a address_window inside of the buff_window 
-			rect_t inter;
-			uint8_t inter_start_x = ib.address_window.x0;
-			uint8_t inner_skip_x = 0;
-			uint8_t buff_skip_x = ib.address_window.x0 - ib.buff_window.x0;
+			//rect_t inter;
+			uint16_t inter_start_x = ib.address_window.x0;
+			uint16_t inner_skip_x = 0;
+			uint16_t buff_skip_x = ib.address_window.x0 - ib.buff_window.x0;
 			if (ib.address_window.x0 < ib.buff_window.x0)
 			{
 				inter_start_x = ib.buff_window.x0;
 				inner_skip_x = ib.buff_window.x0 - ib.address_window.x0;
 				buff_skip_x = 0;
 			}
-			uint8_t inter_start_y = ib.address_window.y0;
-			uint8_t inner_skip_y = 0;
-			uint8_t buff_skip_y = ib.address_window.y0 - ib.buff_window.y0;
+			uint16_t inter_start_y = ib.address_window.y0;
+			uint16_t inner_skip_y = 0;
+			uint16_t buff_skip_y = ib.address_window.y0 - ib.buff_window.y0;
 			if (ib.address_window.y0 < ib.buff_window.y0)
 			{
 				inter_start_y = ib.buff_window.y0;
 				inner_skip_y = ib.buff_window.y0 - ib.address_window.y0;
 				buff_skip_y = 0;
 			}
-			uint8_t inter_end_x = ib.address_window.x1;
+			uint16_t inter_end_x = ib.address_window.x1;
 			if (ib.address_window.x1 > ib.buff_window.x1)
 			{
 				inter_end_x = ib.buff_window.x1;
 			}
-			uint8_t inter_end_y = ib.address_window.y1;
+			uint16_t inter_end_y = ib.address_window.y1;
 			if (ib.address_window.y1 > ib.buff_window.y1)
 			{
 				inter_end_y = ib.buff_window.y1;
 			}
 
-			uint8_t ib_row_size = (ib.buff_window.x1 - ib.buff_window.x0 + 1) * sizeof(uint16_t);
+			uint16_t ib_row_size = (ib.buff_window.x1 - ib.buff_window.x0 + 1) * sizeof(uint16_t);
 
-			uint8_t inter_w = inter_end_x - inter_start_x + 1;
-			uint8_t inner_row_size = inter_w * sizeof(uint16_t);
+			uint16_t inter_w = inter_end_x - inter_start_x + 1;
+			// uint16_t inner_row_size = inter_w * sizeof(uint16_t);
+			uint16_t area_row_size = (ib.address_window.x1 - ib.address_window.x0 + 1) * sizeof(uint16_t);
 
-			uint8_t inter_h = inter_end_y - inter_start_y + 1;
-			uint8_t inter_row; // row numer inside addres_window
+			uint16_t inter_h = inter_end_y - inter_start_y + 1;
+			uint16_t inter_row; // row numer inside addres_window
 			
-			uint8_t buff_row = buff_skip_y;
+
+//DEBUG ONLY!!!
+if (ib.buff_window.y0 >= 80)
+{
+	asm("NOP");
+}
+
+
+			uint16_t buff_row = buff_skip_y;
 			for (
 				inter_row = inner_skip_y; 
-				inter_row < inter_h;
+				inter_row < inter_h + inner_skip_y;
 				inter_row++
 			)
 			{
-				uint16_t from_position = inter_row * inner_row_size + inner_skip_x * sizeof(uint16_t);
-				uint16_t to_position = buff_row * ib_row_size + buff_skip_x * sizeof(uint16_t);
+				uint32_t from_position = inter_row * area_row_size + inner_skip_x * sizeof(uint16_t);
+				uint32_t to_position = buff_row * ib_row_size + buff_skip_x * sizeof(uint16_t);
 				memcpy(
 					&(ib.buff[to_position]), // to
 					&(buff[from_position]),  // from
@@ -363,8 +372,8 @@ void ST7735_SetInterBufferWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1)
 	ib.buff_window.y1 = y1;
 
 	// create inter buff 
-	uint8_t w = x1 - x0 + 1;
-	uint8_t h = y1 - y0 + 1;
+	uint16_t w = x1 - x0 + 1;
+	uint16_t h = y1 - y0 + 1;
 	// Allocate memory for h*w uint16_t
     ib.buff = malloc(w * h * sizeof(uint16_t));
 }
@@ -382,8 +391,8 @@ void ST7735_FlushInterBuffer()
 		ib.buff_window.y1
 	);
 	
-	uint8_t ib_buff_w = ib.buff_window.x1 - ib.buff_window.x0 + 1;
-	uint8_t ib_buff_h = ib.buff_window.y1 - ib.buff_window.y0 + 1;
+	uint16_t ib_buff_w = ib.buff_window.x1 - ib.buff_window.x0 + 1;
+	uint16_t ib_buff_h = ib.buff_window.y1 - ib.buff_window.y0 + 1;
 	uint16_t id_buff_size = ib_buff_w * ib_buff_h * sizeof(uint16_t);
 	Displ_WriteData(
 		ib.buff,

@@ -190,33 +190,9 @@ int main(void)
   int n_x0 = x0;
   int n_y0 = y0;
 
-  /*
-  // screen size test
-  int x1, y1, x2, y2,
-      w = _width,
-      h = _height,
-      d = 2;
-
-  uint16_t color = RED;
-
-  x1 = 0;
-  y1 = 0;
-  x2 = w - 1;
-  y2 = h - 1;
-  color = RED;
-  // diagonal line with arrows
-  Displ_Line(x1, y1, x2, y2, color);
-  Displ_Line(x1, y1, x1 + d, y1, color);
-  Displ_Line(x1, y1, x1, y1 + d, color);
-  Displ_Line(x2 - d, y2, x2, y2, color);
-  Displ_Line(x2, y2 - d, x2, y2, color);
-
-  Displ_Border(0, 0, w, h, 2, CYAN);
-  */
 
   while (1)
   {
-	  // Displ_PerfTest();
 
     // define new position
     int ch_r = randInt(0, 100);
@@ -255,42 +231,23 @@ int main(void)
 
     // draw in new position
     Displ_DrawBackground();
-    // Displ_DrawBackgroundPart(
-    //     n_x0,
-    //     n_y0,
-    //     w,
-    //     h
-    // );
-
-    // 
-    // Displ_CString(
-    //   n_x0 + r, 
-    //   n_y0 + r, 
-    //   x1 + sx - 1 - r, 
-    //   y1 + sy - 1 - r, 
-    //   time_str(), 
-    //   Font16, 
-    //   1, 
-    //   BLACK, 
-    //   WHITE
-    // );
-
-    // // glith fix
-    // Displ_Line(x1 + sx - 1 - r, n_y0 + r, x1 + sx - 1 - r, y1 + sy - 1 - r, WHITE);
-
-    // Displ_Border(n_x0, n_y0, w, h, r, swingColor());
-
-
     
-    // // fill new-old difference
-    // Displ_DrawBackgroundDifference(
-    //     o_x0,
-    //     o_y0,
-    //     w,
-    //     h,
-    //     n_x0,
-    //     n_y0
-    // );
+    Displ_CString(
+      n_x0 + r, 
+      n_y0 + r, 
+      x1 + sx - 1 - r, 
+      y1 + sy - 1 - r, 
+      time_str(), 
+      Font16, 
+      1, 
+      BLACK, 
+      WHITE
+    );
+
+    // glitch fix
+    Displ_Line(x1 + sx - 1 - r, n_y0 + r, x1 + sx - 1 - r, y1 + sy - 1 - r, WHITE);
+
+    Displ_Border(n_x0, n_y0, w, h, r, swingColor());
 
     // flush inter_buffer
     ST7735_FlushInterBuffer();
@@ -301,7 +258,7 @@ int main(void)
 
     /**/
 
-    HAL_Delay(40);
+    HAL_Delay(1);
 
     /* USER CODE END WHILE */
 
