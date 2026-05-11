@@ -144,7 +144,7 @@ const uint16_t background_img_128x128[][128] = {
 void Displ_DrawBackground()
 {
     // Displ_CLS(BLACK);
-    Displ_DrawImage(0, 0, 128, 123, background_img_128x128);
+    Displ_DrawImage(0, 0, 128, 128, background_img_128x128);
 }
 
 
@@ -200,9 +200,10 @@ void Displ_DrawBackgroundPart(
     uint16_t h
 )
 {
-    uint16_t* part = crop_image(x, y, w, h);
+	uint16_t* part = crop_image(x, y, w, h);
     if (part)
     {
+    	uint8_t* part_b = (uint8_t*)part;
         Displ_DrawImage(x, y, w, h, part);
         free(part);
     }

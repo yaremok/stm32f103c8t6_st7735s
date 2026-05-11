@@ -218,9 +218,6 @@ int main(void)
   {
 	  // Displ_PerfTest();
 
-    // hide in old position
-    // Displ_DrawBackgroundPart(o_x0, o_y0, w, h);
-
     // define new position
     int ch_r = randInt(0, 100);
     if (ch_r <= v_change_prob)
@@ -245,35 +242,58 @@ int main(void)
     n_x0 = x0 + sx;
     n_y0 = y0 + sy;
 
+    // set inter_buffer
+    uint8_t o_x1 = o_x0 + w - 1;
+    uint8_t o_y1 = o_y0 + h - 1;
+    uint8_t summ_x0 = min(n_x0, o_x0);
+    uint8_t summ_y0 = min(n_y0, o_y0);
+    uint8_t n_x1 = n_x0 + w - 1;
+    uint8_t n_y1 = n_y0 + h - 1;
+    uint8_t summ_x1 = max(n_x1, o_x1);
+    uint8_t summ_y1 = max(n_y1, o_y1);
+    ST7735_SetInterBufferWindow(summ_x0, summ_y0, summ_x1, summ_y1);
+
     // draw in new position
-    //Displ_fillRoundRect(n_x0, n_y0, w, h, r, GREEN);
-    //Displ_FillArea(n_x0, n_y0, w, h, GREEN);
-    Displ_CString(
-      n_x0 + r, 
-      n_y0 + r, 
-      x1 + sx - 1 - r, 
-      y1 + sy - 1 - r, 
-      time_str(), 
-      Font16, 
-      1, 
-      BLACK, 
-      WHITE
-    );
+    Displ_DrawBackground();
+    // Displ_DrawBackgroundPart(
+    //     n_x0,
+    //     n_y0,
+    //     w,
+    //     h
+    // );
 
-    // glith fix
-    Displ_Line(x1 + sx - 1 - r, n_y0 + r, x1 + sx - 1 - r, y1 + sy - 1 - r, WHITE);
+    // 
+    // Displ_CString(
+    //   n_x0 + r, 
+    //   n_y0 + r, 
+    //   x1 + sx - 1 - r, 
+    //   y1 + sy - 1 - r, 
+    //   time_str(), 
+    //   Font16, 
+    //   1, 
+    //   BLACK, 
+    //   WHITE
+    // );
 
-    Displ_Border(n_x0, n_y0, w, h, r, swingColor());
+    // // glith fix
+    // Displ_Line(x1 + sx - 1 - r, n_y0 + r, x1 + sx - 1 - r, y1 + sy - 1 - r, WHITE);
+
+    // Displ_Border(n_x0, n_y0, w, h, r, swingColor());
+
+
     
-    // fill new-old difference
-    Displ_DrawBackgroundDifference(
-        o_x0,
-        o_y0,
-        w,
-        h,
-        n_x0,
-        n_y0
-    );
+    // // fill new-old difference
+    // Displ_DrawBackgroundDifference(
+    //     o_x0,
+    //     o_y0,
+    //     w,
+    //     h,
+    //     n_x0,
+    //     n_y0
+    // );
+
+    // flush inter_buffer
+    ST7735_FlushInterBuffer();
 
     // remember new position
     o_x0 = n_x0;

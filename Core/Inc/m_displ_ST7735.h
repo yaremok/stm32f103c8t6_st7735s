@@ -27,6 +27,7 @@
 #define INC_M_GFX_FUNCTIONS_H_
 
 #include <string.h>
+#include <stdbool.h>
 
 
 /******************    STEP 0    ******************
@@ -159,6 +160,19 @@ extern int16_t _height;      								///< (oriented) display height
 #define SPI_COMMAND GPIO_PIN_RESET  //DISPL_DC_Pin level sending commands
 #define SPI_DATA GPIO_PIN_SET		//DISPL_DC_Pin level sending data
 
+typedef struct {
+  uint8_t x0; 
+  uint8_t y0; 
+  uint8_t x1; 
+  uint8_t y1;
+} rect_t;
+
+typedef struct {
+  bool buff_is_active;
+  rect_t buff_window; 
+  rect_t address_window; 
+  uint8_t* buff;
+} inter_buff_t;
 
 /***************************
  * set data length lower limit to
@@ -224,6 +238,9 @@ void Displ_fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, 
 void Displ_DrawImage(uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_t *data);
 
 uint32_t Displ_BackLight(uint8_t cmd);
+
+void ST7735_SetInterBufferWindow(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1);
+void ST7735_FlushInterBuffer(void);
 
 
 #ifdef DISPLAY_USING_TOUCHGFX
